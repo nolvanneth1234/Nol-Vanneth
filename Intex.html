@@ -1,0 +1,83 @@
+ doctype html>
+<html lang="km">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111318">
+  <meta name="description" content="Shipping Tracker — កម្មវិធីតាមដានការដឹកជញ្ជូន និងបរិមាណកញ្ចប់ប្រចាំខែ។">
+  <title>Shipping Tracker · New Hope Cambodia</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Shipping Tracker home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5v-9Z"/><path d="m3.5 7.8 8.5 4.4 8.5-4.4M12 12.2V21M8 5l9 4.6"/></svg></span>
+        <span><strong>New Hope Cambodia</strong><small data-i18n="subtitle">ប្រព័ន្ធតាមដានការដឹកជញ្ជូន</small></span>
+      </a>
+      <div class="top-controls">
+        <div class="month-picker" aria-label="Choose month">
+          <button class="icon-button" id="previousMonth" aria-label="Previous month">‹</button>
+          <strong id="monthLabel">មេសា ២០២៦</strong>
+          <button class="icon-button" id="nextMonth" aria-label="Next month">›</button>
+        </div>
+        <div class="user-block"><strong data-i18n="userLabel">បុគ្គលិក</strong><small data-i18n="role">បុគ្គលិកដឹកជញ្ជូន</small></div>
+        <button class="language-button" id="languageToggle" type="button">EN</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="stats-grid" aria-label="Monthly overview">
+        <article class="stat-card stat-blue"><div class="stat-label" data-i18n="totalTons">សរុបតោន / TOTAL TONS</div><div class="stat-value" id="totalTons">0.00</div><div class="stat-note" data-i18n="thisMonth">ខែនេះ · this month</div></article>
+        <article class="stat-card stat-green"><div class="stat-label" data-i18n="earnings">ចំណូល / EARNINGS</div><div class="stat-value" id="totalEarnings">$0.00</div><div class="stat-note" data-i18n="usdIncentive">USD incentive</div></article>
+        <article class="stat-card stat-white"><div class="stat-label" data-i18n="activeDays">ថ្ងៃសកម្ម / ACTIVE DAYS</div><div class="stat-value" id="activeDays">0</div><div class="stat-note" data-i18n="daysRecorded">ថ្ងៃមានទិន្នន័យ · days recorded</div></article>
+        <article class="stat-card stat-orange"><div class="stat-label" data-i18n="peakDay">ថ្ងៃខ្ពស់ / PEAK DAY</div><div class="stat-value" id="peakTons">0.00</div><div class="stat-note" data-i18n="peakUnit">តោន · tons</div></article>
+      </section>
+
+      <section class="panel chart-panel">
+        <div class="panel-head chart-head">
+          <div><h2 data-i18n="dailyChart">ក្រាហ្វតោនប្រចាំថ្ងៃ · Daily Tons</h2><p class="panel-subtitle" data-i18n="chartHint">បរិមាណដឹកជញ្ជូនតាមថ្ងៃក្នុងខែ</p></div>
+          <div class="filter-pills" id="employeeFilters" role="group" aria-label="Filter employees"></div>
+        </div>
+        <div class="chart-wrap" id="chartWrap" aria-label="Daily tons chart"><svg id="tonsChart" viewBox="0 0 960 250" role="img" aria-label="Daily shipping tons"></svg></div>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel entry-panel">
+          <div class="panel-head"><div><h2 data-i18n="enterData">បញ្ចូលទិន្នន័យ · Enter Data</h2><p class="panel-subtitle" data-i18n="entryHint">ថ្ងៃ + បុគ្គលិក + កញ្ចប់</p></div></div>
+          <form id="entryForm">
+            <label class="field-label" for="dayInput" data-i18n="dayLabel">ថ្ងៃ / DAY</label>
+            <input id="dayInput" type="number" min="1" max="31" value="1" required>
+            <label class="field-label" for="staffInput" data-i18n="employeeLabel">បុគ្គលិក / EMPLOYEE</label>
+            <input id="staffInput" type="text" maxlength="80" autocomplete="name" placeholder="សរសេរឈ្មោះបុគ្គលិក" required>
+            <div class="field-label bags-title" data-i18n="bagsLabel">ចំនួនកញ្ចប់ / BAGS</div>
+            <div class="bags-grid">
+              <label><span>20 KG</span><input id="bags20" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="20 kilogram bags"></label>
+              <label><span>25 KG</span><input id="bags25" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="25 kilogram bags"></label>
+              <label><span>30 KG</span><input id="bags30" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="30 kilogram bags"></label>
+            </div>
+            <div class="form-footer"><p id="formMessage" class="form-message" aria-live="polite"></p><button class="primary-button" type="submit" data-i18n="save">រក្សាទុក · Save</button></div>
+          </form>
+        </section>
+
+        <section class="panel staff-panel">
+          <div class="panel-head"><div><h2 data-i18n="staffSummary">សង្ខេបបុគ្គលិក · Staff Summary</h2><p class="panel-subtitle" data-i18n="staffHint">សរុបតាមបុគ្គលិកក្នុងខែនេះ</p></div></div>
+          <div id="staffSummaryCards" class="staff-cards"></div>
+        </section>
+      </section>
+
+      <section class="panel log-panel">
+        <div class="panel-head log-head"><div><h2 data-i18n="log">កំណត់ត្រា · Log</h2><p class="panel-subtitle" data-i18n="logHint">កំណត់ត្រាដឹកជញ្ជូនប្រចាំខែ</p></div><span class="entry-count" id="entryCount">0 entries</span></div>
+        <div class="table-scroll"><table>
+          <thead><tr><th data-i18n="thDay">ថ្ងៃ</th><th data-i18n="thEmployee">បុគ្គលិក</th><th>20 KG</th><th>25 KG</th><th>30 KG</th><th>TONS</th><th>USD</th><th><span class="sr-only" data-i18n="action">សកម្មភាព</span></th></tr></thead>
+          <tbody id="logRows"></tbody>
+        </table></div>
+        <div class="empty-state" id="emptyState" hidden><span class="empty-icon">↗</span><strong data-i18n="emptyTitle">មិនទាន់មានទិន្នន័យ</strong><p data-i18n="emptyText">បញ្ចូលកំណត់ត្រាដំបូងសម្រាប់ខែនេះ។</p></div>
+      </section>
+      <footer><span>New Hope Cambodia · Shipping Tracker</span><span data-i18n="localStorageNote">ទិន្នន័យត្រូវបានរក្សាទុកក្នុង browser នេះ</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
